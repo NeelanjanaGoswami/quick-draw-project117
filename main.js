@@ -25,26 +25,18 @@ function updateCanvas(){
     background("white");
 }
 
-
-
 function draw(){
-    strokeWeight(13);
+  check_sketch(); 
+  
+  strokeWeight(13);
   stroke(0);
-
-  check_sketch();
-
-  answer_holder = "set";
-
-  if (mouseIsPressed) {
-    line(pmouseX, pmouseY, mouseX, mouseY);
-
-  }
+  if (drawn_sketch == sketch){
+    answer_holder = "set"; 
+    document.getElementById('score').innerHTML = 'Score: ' + score;  
+}
 }
 
-if (drawn_sketch == sketch){
-    answer_holder = "set";
-    
-}
+
 
 function gotResult(error, results) {
   if (error) {
