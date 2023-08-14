@@ -11,3 +11,69 @@ timer_check = "";
 drawn_sketch = "";
 answer_holder = "";
 score = 0;
+
+function setup(){
+  canvas = createCanvas(280, 280);
+  canvas.center();
+  background("white");
+  canvas.mouseReleased(classifyCanvas);
+  synth = window.speechSynthesis;
+}
+
+
+function updateCanvas(){
+    background("white");
+}
+
+
+
+function draw(){
+    strokeWeight(13);
+  stroke(0);
+
+  check_sketch();
+
+  answer_holder = "set";
+
+  if (mouseIsPressed) {
+    line(pmouseX, pmouseY, mouseX, mouseY);
+
+  }
+}
+
+if (drawn_sketch == sketch){
+    answer_holder = "set";
+    
+}
+
+function gotResult(error, results) {
+  if (error) {
+    console.error(error);
+  }
+  console.log(results);
+  document.getElementById('yourSketch').innerHTML = 'Your Sketch' + results[0].label;
+
+  document.getElementById('confidence').innerHTML = 'Confidence: ' + Math.round(results[0].confidence * 100) + '%';
+}
+
+
+
+function check_sketch(){
+  timer_counter++;
+  document.getElementById('timer').innerHTML = 'Timer: ' + timer_counter;
+  console.log(timer_counter);
+  if(timer_counter > 400){
+    timer_counter = 0;
+    timer_check = "completed"
+
+  }
+  if(timer_check == "completed" || answer_holder == "set") {
+    timer_check = "";
+    answer_holder = "";
+    updateCanvas();
+  }
+
+}
+  
+
+  
