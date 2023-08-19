@@ -12,6 +12,10 @@ drawn_sketch = "";
 answer_holder = "";
 score = 0;
 
+function preload(){
+  classifier = ml5.imageClassifier('DoodleNet');
+}
+
 function setup(){
   canvas = createCanvas(280, 280);
   canvas.center();
@@ -21,12 +25,13 @@ function setup(){
 }
 
 
+
 function updateCanvas(){
     background("white");
 }
 
 function draw(){
-  check_sketch(); 
+
   
   strokeWeight(13);
   stroke(0);
@@ -37,7 +42,7 @@ function draw(){
   if(mouseIsPressed){
     line(pmouseX, pmouseY, mouseX, mouseY);
   }
-
+  check_sketch(); 
 }
 
 
@@ -48,8 +53,10 @@ function gotResult(error, results) {
   }
   console.log(results);
   document.getElementById('yourSketch').innerHTML = 'Your Sketch' + results[0].label;
-
+ 
   document.getElementById('confidence').innerHTML = 'Confidence: ' + Math.round(results[0].confidence * 100) + '%';
+  utterThis = new SpeechSynthesisUtterance(results[0].label);
+  synth.speak(utterThis);
 }
 
 
@@ -71,8 +78,11 @@ function check_sketch(){
 
 }
 
-function preload(){
-  classifier = ml5.imageClassifier('DoodleNet');
-}
+
 
   
+function classifyCanvas(){
+  classifier.classify(canvas, gotResult);
+
+}
+
