@@ -34,6 +34,10 @@ function draw(){
     answer_holder = "set"; 
     document.getElementById('score').innerHTML = 'Score: ' + score;  
 }
+  if(mouseIsPressed){
+    line(pmouseX, pmouseY, mouseX, mouseY);
+  }
+
 }
 
 
@@ -66,6 +70,9 @@ function check_sketch(){
   }
 
 }
-  
+
+function preload(){
+  classifier = ml5.imageClassifier('DoodleNet');
+}
 
   
